@@ -1,8 +1,4 @@
-name: Test
-
-on:
-  workflow_dispatch:
-  pull_request:
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -23,7 +19,7 @@ env:
   PACT_SERVICE_TAG: ${{ github.event.inputs.env }}
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
