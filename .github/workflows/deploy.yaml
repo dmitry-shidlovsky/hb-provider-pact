@@ -7,15 +7,19 @@ on:
         description: 'Environment to deploy'     
         required: true
         default: 'dev' 
-        type: choice
+        type: environment
         options:
         - dev
         - beta
         - prod 
+      version:
+        description: 'Service version'
+        default: '1.0.0'
+        required: true
 
 env:
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-  PACT_SERVICE_VERSION: 1.0.0
+  PACT_SERVICE_VERSION: ${{ github.event.inputs.env }}
   PACT_SERVICE_TAG: ${{ github.event.inputs.env }}
 
 jobs:
