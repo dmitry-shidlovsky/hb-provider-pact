@@ -21,7 +21,6 @@ env:
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
   PACT_SERVICE_VERSION: ${{ github.event.inputs.version }}
   PACT_SERVICE_TAG: ${{ github.event.inputs.env }}
-  PUBLISH_VERIFICATION_RESULTS: true
 
 jobs:
   deploy:
@@ -46,5 +45,14 @@ jobs:
           --pacticipant TestProvider \
           --broker-base-url https://hb-test.pactflow.io \
           --broker-token $PACT_BROKER_TOKEN \
+          --to-environment $PACT_SERVICE_VERSION \
           --version $PACT_SERVICE_VERSION
-      
+
+    - name: Deploy
+      run: |
+        pact/bin/pact-broker record-deployment \
+          --pacticipant TestProvider \
+          --broker-base-url https://hb-test.pactflow.io \
+          --broker-token $PACT_BROKER_TOKEN \
+		      --environment $PACT_SERVICE_VERSION \
+          --version $PACT_SERVICE_VERSION
