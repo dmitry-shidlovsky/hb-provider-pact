@@ -3,15 +3,15 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
-    env:
-      description: 'Environment to deploy'     
-      required: true
-      default: 'dev' 
-      type: choice
-      options:
-      - dev
-      - beta
-      - prod 
+      env:
+        description: 'Environment to deploy'     
+        required: true
+        default: 'dev' 
+        type: choice
+        options:
+        - dev
+        - beta
+        - prod 
 
 env:
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
