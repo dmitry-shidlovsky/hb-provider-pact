@@ -12,6 +12,7 @@ env:
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
   PACT_SERVICE_VERSION: ${{ github.event.inputs.version }}
   PACT_SERVICE_TAG: dev
+  PUBLISH_VERIFICATION_RESULTS: false
 
 jobs:
   test:
@@ -32,7 +33,3 @@ jobs:
 
     - name: Run provider contract tests
       run: make provider-pact
-    
-    - name: Publish contrats
-      run: make publish
-  

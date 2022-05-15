@@ -34,7 +34,7 @@ func TestProvider_pact(t *testing.T) {
 		ProviderBaseURL:            fmt.Sprintf("http://127.0.0.1:%d", port),
 		PactURLs:                   []string{filepath.FromSlash(fmt.Sprintf("%s/testconsumer-testprovider.json", os.Getenv("PACT_DIR")))},
 		ProviderVersion:            os.Getenv("PACT_SERVICE_VERSION"),
-		Tags:                       []string{os.Getenv("PACT_SERVICE_TAG")},
+		Tags:                       []string{"master", os.Getenv("PACT_SERVICE_TAG")},
 		BrokerURL:                  os.Getenv("PACT_BROKER_URL"),
 		BrokerToken:                os.Getenv("PACT_BROKER_TOKEN"),
 		PublishVerificationResults: publishVerificationResults,
