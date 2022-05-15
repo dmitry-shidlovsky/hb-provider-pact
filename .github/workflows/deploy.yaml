@@ -36,9 +36,6 @@ jobs:
     - name: Install pact
       run: make install
 
-    - name: Run provider contract tests
-      run: make provider-pact
-
     - name: Can I Deploy
       run: |
         pact/bin/pact-broker can-i-deploy \
