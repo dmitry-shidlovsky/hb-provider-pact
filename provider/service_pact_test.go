@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/pact-foundation/pact-go/dsl"
@@ -19,6 +20,16 @@ func TestProvider_pact(t *testing.T) {
 
 	pact := createPact()
 
+	publishVerificationResults := false
+	env, found := os.LookupEnv("PUBLISH_VERIFICATION_RESULTS")
+	if found {
+		result, err := strconv.ParseBool(env)
+		publishVerificationResults = result
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
 	_, err := pact.VerifyProvider(t, types.VerifyRequest{
 		ProviderBaseURL:            fmt.Sprintf("http://127.0.0.1:%d", port),
 		PactURLs:                   []string{filepath.FromSlash(fmt.Sprintf("%s/testconsumer-testprovider.json", os.Getenv("PACT_DIR")))},
@@ -26,7 +37,7 @@ func TestProvider_pact(t *testing.T) {
 		Tags:                       []string{os.Getenv("PACT_SERVICE_TAG")},
 		BrokerURL:                  os.Getenv("PACT_BROKER_URL"),
 		BrokerToken:                os.Getenv("PACT_BROKER_TOKEN"),
-		PublishVerificationResults: true, //TODO for CI
+		PublishVerificationResults: publishVerificationResults,
 	})
 
 	if err != nil {
