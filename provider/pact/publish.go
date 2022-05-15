@@ -11,6 +11,7 @@ import (
 func main() {
 	p := dsl.Publisher{}
 	err := p.Publish(types.PublishRequest{
+		PactURLs:        []string{os.Getenv("PACT_BROKER_URL") + "/contracts/provider/pactflow-example-bi-directional-provider-dredd/version/" + os.Getenv("PACT_SERVICE_VERSION")},
 		PactBroker:      os.Getenv("PACT_BROKER_URL"),
 		ConsumerVersion: os.Getenv("PACT_SERVICE_VERSION"),
 		Tags:            []string{os.Getenv("PACT_SERVICE_TAG")},
