@@ -2,7 +2,16 @@ name: Test
 
 on:
   workflow_dispatch:
-  pull_request:
+    inputs:
+      version:
+        description: 'Servie version'     
+        required: true
+        default: 1.0.0 
+
+env:
+  PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+  PACT_SERVICE_VERSION: ${{ github.event.inputs.version }}
+  PACT_SERVICE_TAG: dev
 
 jobs:
   test:
@@ -20,3 +29,10 @@ jobs:
 
     - name: Run unit test
       run: make provider-unit
+
+    - name: Run provider contract tests
+      run: make provider-pact
+    
+    - name: Publish contrats
+      run: make publish
+  
