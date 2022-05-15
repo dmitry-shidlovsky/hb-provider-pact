@@ -12,7 +12,7 @@ provider-pact: install
 	go test ./provider -run pact -count=1
 
 publish:
-	go run consumer/pact/publish.go
+	go run provider/pact/publish.go
 
 
 .PHONY: install provider-pact provider-unit publish
