@@ -1,6 +1,8 @@
 name: Deploy
 
 on:
+  watch:
+    types: [started]
   workflow_dispatch:
     inputs:
       env:
