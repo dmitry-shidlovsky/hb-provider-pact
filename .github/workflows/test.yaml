@@ -6,13 +6,18 @@ on:
       version:
         description: 'Servie version'     
         required: true
-        default: 1.0.0 
+        default: 1.0.0
+      verify:
+        description: 'Contract verification'     
+        required: true
+        type: boolean
+        default: false
 
 env:
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
   PACT_SERVICE_VERSION: ${{ github.event.inputs.version }}
   PACT_SERVICE_TAG: dev
-  PUBLISH_VERIFICATION_RESULTS: false
+  PUBLISH_VERIFICATION_RESULTS: ${{ github.event.inputs.verify }}
 
 jobs:
   test:
