@@ -14,18 +14,19 @@ import (
 	"github.com/pact-foundation/pact-go/utils"
 )
 
-// The Provider verification
 func TestProvider_pact(t *testing.T) {
 	go startInstrumentedProvider()
 
 	pact := createPact()
 
-	// Verify the Provider - Tag-based Published Pacts for any known consumers
 	_, err := pact.VerifyProvider(t, types.VerifyRequest{
-		ProviderBaseURL: fmt.Sprintf("http://127.0.0.1:%d", port),
-		Tags:            []string{"master"},
-		PactURLs:        []string{filepath.FromSlash(fmt.Sprintf("%s/soverenconsumer-soverenprovider.json", os.Getenv("PACT_DIR")))},
-		ProviderVersion: "1.0.0",
+		ProviderBaseURL:            fmt.Sprintf("http://127.0.0.1:%d", port),
+		PactURLs:                   []string{filepath.FromSlash(fmt.Sprintf("%s/testconsumer-testprovider.json", os.Getenv("PACT_DIR")))},
+		ProviderVersion:            os.Getenv("PACT_SERVICE_VERSION"),
+		Tags:                       []string{os.Getenv("PACT_SERVICE_TAG")},
+		BrokerURL:                  os.Getenv("PACT_BROKER_URL"),
+		BrokerToken:                os.Getenv("PACT_BROKER_TOKEN"),
+		PublishVerificationResults: true, //TODO for CI
 	})
 
 	if err != nil {
@@ -58,7 +59,7 @@ var port, _ = utils.GetFreePort()
 // Setup the Pact client.
 func createPact() dsl.Pact {
 	return dsl.Pact{
-		Provider: "SoverenProvider",
+		Provider: "TestProvider",
 		LogDir:   logDir,
 		LogLevel: "INFO",
 	}
