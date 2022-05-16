@@ -67,7 +67,5 @@ func commonMiddleware(f http.HandlerFunc) http.HandlerFunc {
 func GetHTTPHandler() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/user/", commonMiddleware(GetUser))
-	mux.HandleFunc("/users/", commonMiddleware(GetUsers))
-
 	return mux
 }
